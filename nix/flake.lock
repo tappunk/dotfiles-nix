@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1781875326,
-        "narHash": "sha256-oKvpgkrE9MXNw8Sg/SCwK3l2SC7UyQTaOPUnLwHlfdE=",
+        "lastModified": 1781885600,
+        "narHash": "sha256-NZ9LyA6MfYrV9aiNAQsqee39rtWIZfQaVTvcKa1g8CQ=",
         "owner": "tappunk",
         "repo": "muthr",
-        "rev": "a30a70345b9c9b1b9b3a3f199182287507756516",
+        "rev": "adb43e3263087f634a10b20265e72d73a42ae795",
         "type": "github"
       },
       "original": {
