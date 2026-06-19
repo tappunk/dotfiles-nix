@@ -1,0 +1,29 @@
+config-file = ?auto/theme.ghostty
+
+background-blur-radius = 20
+background-opacity = 0.97
+window-padding-x = 10
+window-padding-y = 10
+window-decoration = true
+macos-titlebar-style = tabs
+macos-window-buttons = hidden
+
+cursor-style = block
+cursor-style-blink = false
+font-size = 13
+font-thicken = true
+shell-integration = detect
+macos-option-as-alt = true
+mouse-hide-while-typing = true
+scrollback-limit = 1000
+shell-integration-features = ssh-terminfo
+quit-after-last-window-closed = true
+
+clipboard-write = allow
+clipboard-read = allow
+desktop-notifications = true
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = no-bell,notify
+notify-on-command-finish-after = 10s
+
+keybind = performable:cmd+c=copy_to_clipboard

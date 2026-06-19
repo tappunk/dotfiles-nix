@@ -1,0 +1,111 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+command_timeout = 5000
+
+format = """
+[](fg:pill_primary_bg)\
+$os\
+$username\
+$hostname\
+[](fg:pill_primary_bg) \
+[](fg:pill_secondary_bg)\
+$directory\
+[](fg:pill_secondary_bg) \
+$git_branch$git_status \
+$c$cpp$rust$golang$nodejs$python \
+$cmd_duration\
+$line_break$character"""
+
+palette = 'ghostty_palette'
+
+[palettes.ghostty_palette]
+pill_primary_bg = "blue"
+pill_secondary_bg = "bright-black"
+pill_text_dark = "black"
+
+text_primary = "magenta"
+text_secondary = "cyan"
+text_muted = "bright-black"
+data_accent = "yellow"
+error_accent = "red"
+
+[os]
+disabled = false
+style = "bg:pill_primary_bg fg:pill_text_dark"
+
+[os.symbols]
+Macos = ""
+Linux = "󰌽"
+
+[username]
+show_always = true
+style_user = "bg:pill_primary_bg fg:pill_text_dark"
+style_root = "bg:pill_primary_bg fg:error_accent"
+format = '[ $user]($style)'
+
+[hostname]
+disabled = false
+ssh_only = false
+style = "bg:pill_primary_bg fg:pill_text_dark"
+format = '[@$hostname]($style)'
+trim_at = "."
+
+[directory]
+style = "bg:pill_secondary_bg fg:text_secondary"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+style = "fg:text_primary"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = "fg:data_accent"
+format = '[( $all_status $ahead_behind )]($style)'
+
+[nodejs]
+symbol = ""
+style = "fg:text_secondary"
+format = '[ $symbol]($style)'
+
+[rust]
+symbol = ""
+style = "fg:text_secondary"
+format = '[ $symbol]($style)'
+
+[golang]
+symbol = ""
+style = "fg:text_secondary"
+format = '[ $symbol]($style)'
+
+[python]
+symbol = ""
+style = "fg:text_secondary"
+format = '[ $symbol]($style)'
+
+[time]
+disabled = true
+
+[character]
+disabled = false
+success_symbol = '[](bold text_primary)'
+error_symbol = '[](bold error_accent)'
+vimcmd_symbol = '[](bold data_accent)'
+
+[cmd_duration]
+min_time = 2000
+format = '[ 󱦟 $duration ]($style)'
+style = "fg:text_secondary"
+
+
+[battery]
+disabled = true
+full_symbol = '󰁹 '
+charging_symbol = '󰂄 '
+discharging_symbol = '󰂃 '
+
+[[battery.display]]
+threshold = 20
+style = "bold error_accent"
+
