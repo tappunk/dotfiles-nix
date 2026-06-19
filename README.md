@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/tappunk?style=social)](https://x.com/tappunk)
 
-# dotfiles
+# dotfiles-nix
 
 **Hardened macOS dotfiles for a zero-trust local AI workstation. A real-world reference implementation for [muthr](https://github.com/tappunk/muthr) that shows secure AI orchestration on Apple Silicon with reproducible Nix-built dependencies.**
 
