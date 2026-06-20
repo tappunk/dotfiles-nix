@@ -1,7 +1,7 @@
 ![Hardened Local AI Workstation](https://raw.githubusercontent.com/tappunk/.github/refs/heads/main/assets/dotfiles-banner.webp)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/tappunk?style=social)](https://x.com/tappunk)
+[![X Follow](https://img.shields.io/twitter/follow/tappunk?style=social)](https://x.com/tappunk)
 
 # dotfiles-nix
 
