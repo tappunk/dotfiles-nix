@@ -61,7 +61,6 @@
     mkdir -p "$userHome/.config/opencode"
     mkdir -p "$userHome/opt/models"
     mkdir -p "$userHome/.local/bin"
-    mkdir -p "$userHome/src/projects"
 
     ln -sfn "$userHome/dotfiles-nix/nvim"                     "$userHome/.config/nvim"
     ln -sfn "$userHome/dotfiles-nix/fastfetch/config.jsonc"   "$userHome/.config/fastfetch/config.jsonc"
