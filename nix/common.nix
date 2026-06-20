@@ -54,7 +54,7 @@
     echo "=== Setting up user dotfile symlinks ==="
     userHome="${config.users.users.user.home}"
 
-    mkdir -p "$userHome/.config/"{zsh,ghostty,eza,fastfetch,llama}
+    mkdir -p "$userHome/.config/"{zsh,ghostty,eza,fastfetch}
     mkdir -p "$userHome/.lima"
     mkdir -p "$userHome/.cache/muthr"
     mkdir -p "$userHome/.cache/dotfiles" "$userHome/.cache/starship" "$userHome/.cache/uv"
