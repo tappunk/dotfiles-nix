@@ -45,6 +45,5 @@ alias la='eza -a --icons --group-directories-first'
 alias lla='eza -lah --icons --group-directories-first --git'
 alias ff='fd'
 
-[[ -f "$HOME/.cache/muthr/opencode-profile" ]] && source "$HOME/.cache/muthr/opencode-profile"
 [[ -f "$HOME/.zshrc.secrets" ]] && source "$HOME/.zshrc.secrets"
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
