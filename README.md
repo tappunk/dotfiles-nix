@@ -1,5 +1,3 @@
-![Hardened Local AI Workstation](https://raw.githubusercontent.com/tappunk/.github/refs/heads/main/assets/dotfiles-banner.webp)
-
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![X Follow](https://img.shields.io/twitter/follow/tappunk?style=social)](https://x.com/tappunk)
 
@@ -13,7 +11,7 @@
 ## Architecture
 
 - **Inference** — `llama-server` on the host with configurable presets and auto VRAM management
-- **Agent isolation** — Debian 13 VMs via Lima (`vmType: vz`) that sandbox agents and auto-stop when done
+- **Agent isolation** — Debian 13 VMs via Lima (`vmType: vz`) that sandbox agents; VMs stay running until stopped with `muthr down`
 - **MCP services** — Dedicated Lima VM for potentially dangerous MCPs, isolated from the host
 - **System management** — `nix-darwin` flakes with SHA256-pinned hashes, Ghostty + Neovim + Starship
 
@@ -45,8 +43,6 @@ exec zsh
 
 # muthr init runs automatically during nix activation to install configs
 
-# Rebuild anytime
-muthr rebase
 ```
 
 ## Configuration
@@ -73,4 +69,4 @@ cd ~/dotfiles
 ./bootstrap.sh
 ```
 
-Run `muthr rebase` for subsequent updates.
+Run `./bootstrap.sh` for subsequent updates.
