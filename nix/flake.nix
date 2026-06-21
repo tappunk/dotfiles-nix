@@ -9,6 +9,9 @@
 
     muthr.url = "github:tappunk/muthr/main";
     muthr.inputs.nixpkgs.follows = "nixpkgs";
+
+    hunk.url = "github:modem-dev/hunk";
+    hunk.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, muthr, ... }:

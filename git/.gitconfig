@@ -1,6 +1,6 @@
 [core]
     editor = nvim
-    pager = delta
+    pager = hunk pager
     excludesfile = ~/.gitignore_global
     autocrlf = input
     safecrlf = true
@@ -76,22 +76,6 @@
 [interactive]
     diffFilter = delta --color-only
 
-[delta]
-    navigate = true
-    side-by-side = true
-    line-numbers = true
-    syntax-theme = Monokai Extended
-    plus-style = syntax "#003800"
-    minus-style = syntax "#3f0001"
-    decorations = true
-    features = decorations
-
-[filter "lfs"]
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
-    clean = git-lfs clean -- %f
-
 [alias]
     lg = log --graph --pretty=format:'%C(auto)%h%Creset %C(magenta)%G?%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     lga = log --graph --pretty=format:'%C(auto)%h%Creset %C(magenta)%G?%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all
@@ -115,6 +99,9 @@
     ri = rebase -i HEAD~10
     rim = rebase -i main
     root = rev-parse --show-toplevel
+    hdiff = "-c core.pager=\"hunk pager\" diff"
+    hshow = "-c core.pager=\"hunk pager\" show"
+    hlog  = "-c core.pager=\"hunk pager\" log -p"
 
 [difftool "nvim"]
     cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
@@ -124,5 +111,4 @@
     trustExitCode = true
 
 [include]
-    # This looks for the local file in your home directory
     path = ~/.gitconfig.local

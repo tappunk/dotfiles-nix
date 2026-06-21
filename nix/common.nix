@@ -95,19 +95,19 @@ cache=~/.local/npm/cache' > "$userHome/.npmrc"
   environment.systemPackages = let
     opencode = pkgs.stdenvNoCC.mkDerivation {
       pname = "opencode";
-      version = "v1.17.8";
+      version = "v1.17.9";
 
       src = pkgs.fetchFromGitHub {
         owner = "anomalyco";
         repo = "opencode";
-        tag = "v1.17.8";
-        hash = "sha256-iReCFIJeJIOIs95v0ReVR/X1PnT5dSnR9O0TniyvPR8=";
+        tag = "v1.17.9";
+        hash = "sha256-OWfI2dp0PeNShVZMzEdm69EtxWX7UwmyPmX02SfrjP8=";
       };
 
       nativeBuildInputs = with pkgs; [ bun nodejs git ripgrep sysctl makeBinaryWrapper installShellFiles ];
 
       preHook = ''
-        export OPENCODE_VERSION="1.17.8"
+        export OPENCODE_VERSION="1.17.9"
         export OPENCODE_DISABLE_MODELS_FETCH="true"
         export HOME=$TMPDIR
         export BUN_TMPDIR=$TMPDIR
@@ -163,11 +163,11 @@ cache=~/.local/npm/cache' > "$userHome/.npmrc"
 
     llama-cpp = pkgs.stdenv.mkDerivation {
       pname = "llama-cpp";
-      version = "b9741";
+      version = "b9744";
 
       src = pkgs.fetchurl {
-        url = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/b9741.tar.gz";
-        hash = "sha256-D0mY/D7Y6tEwwFP58TMfTgmuaI4ZIh0dYCy65VeEEwk=";
+        url = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/b9744.tar.gz";
+        hash = "sha256-KM7E9BejTEKjvwRybYO0rB3WS2GGALmFZu3XUW/NAB0=";
       };
 
       nativeBuildInputs = with pkgs; [ pkg-config cmake ];
@@ -221,6 +221,7 @@ cache=~/.local/npm/cache' > "$userHome/.npmrc"
     opencode
     llama-cpp
     muthr
+    inputs.hunk.packages.${pkgs.stdenv.hostPlatform.system}.hunk
   ];
 
   fonts.packages = with pkgs; [
