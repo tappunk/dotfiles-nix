@@ -25,7 +25,6 @@ dist/
 *.cert
 *.gpg
 *.id_ed25519*
-AGENTS.md
 .DS_Store
 .AppleDouble
 .LSOverride

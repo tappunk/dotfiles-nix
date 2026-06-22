@@ -55,3 +55,5 @@ dist/
 *.old
 *.orig
 *.rej
+
+AGENTS.md
