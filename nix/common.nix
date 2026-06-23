@@ -163,11 +163,11 @@ cache=~/.local/npm/cache' > "$userHome/.npmrc"
 
     llama-cpp = pkgs.stdenv.mkDerivation {
       pname = "llama-cpp";
-      version = "b9763";
+      version = "b9771";
 
       src = pkgs.fetchurl {
-        url = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/b9763.tar.gz";
-        hash = "sha256-McELbKGfbgL8VVdyHaMIW1EsCprxcH94Q6n4gv3b5Jw=";
+        url = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/b9771.tar.gz";
+        hash = "sha256-fowHYFHy5utLwKPJKM1LWbGEZ2zIi7Oni14z09q68cs=";
       };
 
       nativeBuildInputs = with pkgs; [ pkg-config cmake ];
