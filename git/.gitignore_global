@@ -56,4 +56,6 @@ dist/
 *.orig
 *.rej
 
+.local/
+.opencode/
 AGENTS.md
