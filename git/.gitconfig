@@ -102,6 +102,7 @@
     hdiff = "-c core.pager=\"hunk pager\" diff"
     hshow = "-c core.pager=\"hunk pager\" show"
     hlog  = "-c core.pager=\"hunk pager\" log -p"
+    logs = log --show-signature
 
 [difftool "nvim"]
     cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
