@@ -5,7 +5,44 @@
 
 # dotfiles-nix
 
-**Hardened macOS dotfiles for a zero-trust local AI workstation. A real-world reference implementation for [muthr](https://github.com/tappunk/muthr) that shows secure AI orchestration on Apple Silicon with reproducible Nix-built dependencies.**
+**Hardened macOS dotfiles via Nix for a zero-trust AI workstation.** Declarative config, reproducible builds, muthr integration.
+
+[What's installed](#whats-installed) • [Quick start](#quick-start) • [Architecture](#architecture) • [Updating](#updating)
+
+## What's installed
+
+- **Ghostty** — terminal emulator
+- **Neovim** — editor
+- **Zsh** — shell with Starship prompt
+- **Git** — with global ignore rules
+- **Eza** — modern ls replacement
+- **Fastfetch** — system info display
+- **muthr** — zero-trust AI orchestrator (installed during nix-darwin activation)
+
+### Configuration files
+
+| Config       | Source                   | Installed at                           |
+| ------------ | ------------------------ | -------------------------------------- |
+| `ghostty/`   | `ghostty/`               | `~/.config/ghostty/config`             |
+| `nvim/`      | `nvim/`                  | `~/.config/nvim/`                      |
+| `zsh/`       | `zsh/`                   | `~/.zshrc`, `~/.zshenv`, `~/.zprofile` |
+| `git/`       | `git/`                   | `~/.gitconfig`, `~/.gitignore_global`  |
+| `starship/`  | `starship/starship.toml` | `~/.config/starship.toml`              |
+| `eza/`       | `eza/theme.yml`          | `~/.config/eza/theme.yml`              |
+| `fastfetch/` | `fastfetch/config.jsonc` | `~/.config/fastfetch/config.jsonc`     |
+
+All files are managed declaratively via nix-darwin flakes with SHA256-pinned hashes. muthr stores runtime state (PIDs, logs, generated JSON) in `~/.cache/muthr/`.
+
+## Quick start
+
+```bash
+git clone https://github.com/tappunk/dotfiles-nix ~/dotfiles-nix
+cd ~/dotfiles-nix
+./bootstrap.sh
+exec zsh
+```
+
+Requires Determinate Nix — install from [determinate.systems](https://determinate.systems).
 
 > [!WARNING]
 > Requires familiarity with declarative Nix systems, `nix-darwin`, and reviewing code before execution.
@@ -17,58 +54,10 @@
 - **MCP services** — Dedicated Lima VM for potentially dangerous MCPs, isolated from the host
 - **System management** — `nix-darwin` flakes with SHA256-pinned hashes, Ghostty + Neovim + Starship
 
-## Prerequisites
-
-macOS (Apple Silicon), [Determinate Nix](https://determinate.systems), ≥48 GB RAM for 35B models.
-
-> [!NOTE]
-> The ≥48GB RAM requirement applies to 35B models. Smaller models run on machines with less memory.
-
-## Usage
+## Updating
 
 ```bash
-# 0. Install Ghostty (recommended)
-# [https://ghostty.org/download](https://ghostty.org/download)
-
-# 1. Xcode Command Line Tools
-xcode-select --install
-
-# 2. Determinate Nix
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-
-# 3. Bootstrap
-git clone https://github.com/tappunk/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-./bootstrap.sh
-exec zsh
-
-# muthr init runs automatically during nix activation to install configs
-
-```
-
-## Configuration
-
-Activation symlinks dotfiles from `~/dotfiles-nix/` to `~/.config/`:
-
-- `ghostty/` → `~/.config/ghostty/config`
-- `nvim/` → `~/.config/nvim`
-- `zsh/` → `~/.zshrc`, `~/.zshenv`, `~/.zprofile`
-- `git/` → `~/.gitconfig`, `~/.gitignore_global`
-- `starship/starship.toml` → `~/.config/starship.toml`
-- `eza/theme.yml` → `~/.config/eza/theme.yml`
-- `fastfetch/config.jsonc` → `~/.config/fastfetch/config.jsonc`
-
-`muthr` stores runtime state (PIDs, logs, generated JSON) in `~/.cache/muthr/`.
-
-## Installation
-
-Declarative via nix-darwin flakes:
-
-```bash
-git clone https://github.com/tappunk/dotfiles.git ~/dotfiles
-cd ~/dotfiles
+cd ~/dotfiles-nix
+git pull
 ./bootstrap.sh
 ```
-
-Run `./bootstrap.sh` for subsequent updates.
