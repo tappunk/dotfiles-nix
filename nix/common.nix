@@ -74,6 +74,14 @@
 
     ln -sfn "$userHome/dotfiles-nix/git/.gitconfig"           "$userHome/.gitconfig"
     ln -sfn "$userHome/dotfiles-nix/git/.gitignore_global"    "$userHome/.gitignore_global"
+
+    if [ -d "$userHome/.githooks" ] && [ ! -L "$userHome/.githooks" ]; then
+      backupPath="$userHome/.cache/dotfiles/githooks-prelink-$(date +%Y%m%d%H%M%S)"
+      mv "$userHome/.githooks" "$backupPath"
+      echo "Backed up existing ~/.githooks directory to $backupPath"
+    fi
+
+    ln -sfn "$userHome/dotfiles-nix/git/.githooks"            "$userHome/.githooks"
     ln -sfn "$userHome/dotfiles-nix/zsh/.zshrc"               "$userHome/.zshrc"
     ln -sfn "$userHome/dotfiles-nix/zsh/.zshenv"              "$userHome/.zshenv"
     ln -sfn "$userHome/dotfiles-nix/zsh/.zprofile"            "$userHome/.zprofile"
@@ -86,7 +94,7 @@
 cache=~/.local/npm/cache' > "$userHome/.npmrc"
     fi
 
-    chown ${config.users.users.user.name}:staff "$userHome/.gitconfig" "$userHome/.gitignore_global" "$userHome/.zshrc" "$userHome/.zshenv" "$userHome/.zprofile" "$userHome/.npmrc" 2>/dev/null || true
+    chown ${config.users.users.user.name}:staff "$userHome/.gitconfig" "$userHome/.gitignore_global" "$userHome/.githooks" "$userHome/.zshrc" "$userHome/.zshenv" "$userHome/.zprofile" "$userHome/.npmrc" 2>/dev/null || true
     chown -R ${config.users.users.user.name}:staff "$userHome/.config" "$userHome/.cache" "$userHome/.cache/muthr" "$userHome/.lima" "$userHome/.gnupg" "$userHome/.local" 2>/dev/null || true
 
     echo "Dotfile symlinks completed cleanly for $userHome"
@@ -163,11 +171,11 @@ cache=~/.local/npm/cache' > "$userHome/.npmrc"
 
     llama-cpp = pkgs.stdenv.mkDerivation {
       pname = "llama-cpp";
-      version = "b9804";
+      version = "b9813";
 
       src = pkgs.fetchurl {
-        url = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/b9804.tar.gz";
-        hash = "sha256-dr+xDT65PBAvYS8g0jaZn+7IqKjCKpRcFjVkUcwhtpY=";
+        url = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/b9813.tar.gz";
+        hash = "sha256-Z2Xx91QKNqTUWmqSga/Xv11bRbHTDwevlEoCsxKMNmc=";
       };
 
       nativeBuildInputs = with pkgs; [ pkg-config cmake ];
