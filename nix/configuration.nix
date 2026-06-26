@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ ... }:
 
 let
   localConfig = ./common.local.nix;

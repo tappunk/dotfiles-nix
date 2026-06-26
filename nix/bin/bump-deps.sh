@@ -1,15 +1,21 @@
 #!/usr/bin/env zsh
 
-set -e
+set -euo pipefail
 
-NIX_FILE="$HOME/dotfiles-nix/nix/common.nix"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${(%):-%N}")" && pwd)"
+NIX_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+NIX_FILE="$NIX_DIR/modules/packages.nix"
 
 prefetch_to_sri() {
     local url_target="$1"
-    local unpack_flag="$2"
+    local unpack_flag="${2:-}"
 
     local base32_hash
-    base32_hash=$(nix-prefetch-url $unpack_flag "$url_target")
+    if [ -n "$unpack_flag" ]; then
+        base32_hash=$(nix-prefetch-url "$unpack_flag" "$url_target")
+    else
+        base32_hash=$(nix-prefetch-url "$url_target")
+    fi
 
     local b64_hash
     b64_hash=$(nix-hash --type sha256 --to-base64 "$base32_hash")
@@ -20,7 +26,7 @@ prefetch_to_sri() {
 echo "==== Starting Pinned Dependency Upgrades ===="
 
 echo "Checking OpenCode..."
-OPENCODE_TAG=$(curl -s https://api.github.com/repos/anomalyco/opencode/releases/latest | jq -r .tag_name)
+OPENCODE_TAG=$(curl -fsSL https://api.github.com/repos/anomalyco/opencode/releases/latest | jq -r .tag_name)
 OPENCODE_VER=${OPENCODE_TAG#v}
 echo "-> Latest Release Tag: $OPENCODE_TAG"
 echo "-> Prefetching SRI hash..."
@@ -28,7 +34,7 @@ OPENCODE_HASH=$(prefetch_to_sri "https://github.com/anomalyco/opencode/archive/r
 echo "-> Computed Hash: $OPENCODE_HASH"
 
 echo "Checking Llama.cpp..."
-LLAMA_TAG=$(curl -s https://api.github.com/repos/ggml-org/llama.cpp/releases/latest | jq -r .tag_name)
+LLAMA_TAG=$(curl -fsSL https://api.github.com/repos/ggml-org/llama.cpp/releases/latest | jq -r .tag_name)
 echo "-> Latest Release Tag: $LLAMA_TAG"
 echo "-> Prefetching SRI hash..."
 LLAMA_HASH=$(prefetch_to_sri "https://github.com/ggml-org/llama.cpp/archive/refs/tags/${LLAMA_TAG}.tar.gz")
@@ -37,6 +43,10 @@ echo "-> Computed Hash: $LLAMA_HASH"
 echo "Patching $NIX_FILE..."
 
 TMP_NIX=$(mktemp)
+cleanup() {
+    rm -f "$TMP_NIX"
+}
+trap cleanup EXIT
 
 awk -v opencode_tag="$OPENCODE_TAG" -v opencode_ver="$OPENCODE_VER" -v opencode_hash="$OPENCODE_HASH" \
     -v llama_tag="$LLAMA_TAG" -v llama_hash="$LLAMA_HASH" \
@@ -64,18 +74,16 @@ awk -v opencode_tag="$OPENCODE_TAG" -v opencode_ver="$OPENCODE_VER" -v opencode_
     { print $0 }' "$NIX_FILE" >"$TMP_NIX"
 
 mv "$TMP_NIX" "$NIX_FILE"
+trap - EXIT
 
 echo "Updating muthr flake..."
-cd "$HOME/dotfiles-nix/nix"
-nix flake update muthr
+nix flake update muthr --flake "$NIX_DIR"
 echo "-> muthr flake updated"
-cd "$HOME/dotfiles-nix"
 
 echo "Verifying Nix configuration syntax..."
-if nix-instantiate --parse "$NIX_FILE" >/dev/null; then
+if nix-instantiate --parse "$NIX_FILE" >/dev/null && nix eval "$NIX_DIR#darwinConfigurations.system.system" >/dev/null; then
     echo "==== Success! Dependencies updated and Nix layout validated OK ===="
 else
-    echo "!!!! Warning: Script completed but validation failed. Verify your common.nix file manually !!!!"
+    echo "!!!! Warning: Script completed but validation failed. Verify your Nix files manually !!!!"
     exit 1
 fi
-

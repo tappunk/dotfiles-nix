@@ -14,16 +14,21 @@
     hunk.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, muthr, ... }:
-  {
-    darwinConfigurations."system" = nix-darwin.lib.darwinSystem {
-      specialArgs = {
-        inherit inputs self;
-        muthr = muthr.packages.aarch64-darwin.default;
+  outputs = inputs@{ self, nix-darwin, ... }:
+    let
+      darwinConfig = nix-darwin.lib.darwinSystem {
+        specialArgs = {
+          inherit inputs self;
+        };
+        modules = [ ./configuration.nix ];
       };
-      modules = [ ./configuration.nix ];
-    };
 
-    darwinPackages = self.darwinConfigurations."system".pkgs;
-  };
+      hostSystem = darwinConfig.pkgs.stdenv.hostPlatform.system;
+    in
+    {
+      darwinConfigurations."system" = darwinConfig;
+
+      darwinPackages = darwinConfig.pkgs;
+      packages.${hostSystem}.darwin-rebuild = nix-darwin.packages.${hostSystem}.darwin-rebuild;
+    };
 }

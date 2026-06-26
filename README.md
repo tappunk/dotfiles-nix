@@ -61,3 +61,17 @@ cd ~/dotfiles-nix
 git pull
 ./bootstrap.sh
 ```
+
+## Local validation
+
+Run local reproducibility and setup checks before committing changes:
+
+```bash
+./nix/bin/check.sh
+```
+
+For a quick post-switch verification only:
+
+```bash
+./nix/bin/verify-setup.sh
+```

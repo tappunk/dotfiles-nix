@@ -1,24 +1,33 @@
 #!/usr/bin/env bash
 
-DOTFILES_DIR="$HOME/dotfiles-nix"
-LOCAL_CONFIG="$DOTFILES_DIR/nix/common.local.nix"
+set -euo pipefail
 
-USERNAME=$(id -un)
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+DOTFILES_DIR="$SCRIPT_DIR"
+NIX_DIR="$DOTFILES_DIR/nix"
+LOCAL_CONFIG="$NIX_DIR/common.local.nix"
+
+USERNAME="$(id -un)"
 USERHOME="$HOME"
+
+if [ ! -d "$NIX_DIR" ]; then
+    echo "Expected nix directory at: $NIX_DIR"
+    exit 1
+fi
 
 if [ ! -f "$LOCAL_CONFIG" ]; then
     echo ""
     echo "============================================================"
     echo "This script installs Nix packages, symlinks dotfiles,"
-    echo "and configures your entire development environment."
-    echo "Run only on a fresh macOS install with backups in place."
+    echo "and configures your development environment."
+    echo "Review this repository before running on any machine."
     echo "============================================================"
     echo ""
     echo "=== Detected user configuration ==="
     echo "  Username: $USERNAME"
     echo "  Home:     $USERHOME"
     echo ""
-    read -p "Continue? [Y/n] " response
+    read -r -p "Continue? [Y/n] " response
     case "$response" in
     n | N)
         echo "Aborted. Update nix/common.local.nix manually and run again."
@@ -27,7 +36,8 @@ if [ ! -f "$LOCAL_CONFIG" ]; then
     esac
 
     cat >"$LOCAL_CONFIG" <<EOF
-{ pkgs, ... }: {
+{ ... }:
+{
   users.users.user = {
     name = "$USERNAME";
     home = "$USERHOME";
@@ -38,5 +48,5 @@ EOF
 fi
 
 echo ""
-echo "Building and switching Nix-Darwin system generation..."
-sudo -E nix run nix-darwin -- switch --flake "$DOTFILES_DIR/nix#system"
+echo "Building and switching nix-darwin system generation..."
+sudo nix run "$NIX_DIR#darwin-rebuild" -- switch --flake "$NIX_DIR#system"
