@@ -7,6 +7,7 @@
     fsmonitor = true 
     untrackedCache = true
     fileMode = false
+	hooksPath = /Users/user/.githooks
 
 [init]
     defaultBranch = main
