@@ -105,7 +105,7 @@ in
 {
   environment.systemPackages = with pkgs; [
     wget stow delta bat eza fd ripgrep zoxide fastfetch fzf glow jq starship
-    macmon lima neovim yazi rsync uv gh exiftool imagemagick asciinema agg
+    macmon lima neovim yazi rsync uv gh exiftool imagemagick asciinema-agg
     ffmpeg tmux
 
     python3 nodejs rustc cargo clippy rustfmt
