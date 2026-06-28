@@ -70,42 +70,11 @@ let
     installCheckPhase = "$out/bin/opencode --version";
   };
 
-  llama-cpp = pkgs.stdenv.mkDerivation {
-    pname = "llama-cpp";
-    version = "b9813";
-
-    src = pkgs.fetchurl {
-      url = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/b9813.tar.gz";
-      hash = "sha256-Z2Xx91QKNqTUWmqSga/Xv11bRbHTDwevlEoCsxKMNmc=";
-    };
-
-    nativeBuildInputs = with pkgs; [ pkg-config cmake ];
-    buildInputs = with pkgs; [ curl ];
-
-    cmakeFlags = [
-      "-DGGML_METAL_EMBED_LIBRARY=ON"
-      "-DGGML_LTO=ON"
-      "-DLLAMA_CURL=ON"
-      "-DLLAMA_ACCELERATE=ON"
-      "-DLLAMA_SERVER_WEBUI=OFF"
-      "-DCMAKE_INCLUDE_OUTPUT_DIRECTORY=include"
-      "-DBUILD_SHARED_LIBS=OFF"
-    ];
-
-    installPhase = ''
-      mkdir -p $out/bin
-      cp bin/* $out/bin/ 2>/dev/null || cp build/bin/* $out/bin/
-
-      if [ -f $out/bin/llama-cli ]; then
-        ln -sf $out/bin/llama-cli $out/bin/llama-cpp
-      fi
-    '';
-  };
 in
 {
   environment.systemPackages = with pkgs; [
     wget stow delta bat eza fd ripgrep zoxide fastfetch fzf glow jq starship
-    macmon lima neovim yazi rsync uv gh exiftool imagemagick asciinema-agg
+    macmon neovim yazi rsync uv gh exiftool imagemagick asciinema-agg
     ffmpeg tmux
 
     python3 nodejs rustc cargo clippy rustfmt
@@ -122,7 +91,6 @@ in
     mcp-server-sequential-thinking
 
     opencode
-    llama-cpp
     muthr
     inputs.hunk.packages.${system}.hunk
   ];

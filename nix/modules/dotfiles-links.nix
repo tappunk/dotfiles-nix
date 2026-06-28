@@ -12,7 +12,6 @@ in
 
   system.activationScripts.dotfilesDirs.text = lib.mkAfter ''
     mkdir -p "${userHome}/.config/"{zsh,ghostty,eza,fastfetch}
-    mkdir -p "${userHome}/.lima"
     mkdir -p "${userHome}/.cache/muthr"
     mkdir -p "${userHome}/.cache/dotfiles" "${userHome}/.cache/starship" "${userHome}/.cache/uv"
     mkdir -p "${userHome}/.config/opencode"
@@ -97,6 +96,6 @@ in
 
   system.activationScripts.dotfilesOwnership.text = lib.mkAfter ''
     chown ${userName}:staff "${userHome}/.gitconfig" "${userHome}/.gitignore_global" "${userHome}/.githooks" "${userHome}/.zshrc" "${userHome}/.zshenv" "${userHome}/.zprofile" "${userHome}/.npmrc" 2>/dev/null || true
-    chown -R ${userName}:staff "${userHome}/.config" "${userHome}/.cache" "${userHome}/.lima" "${userHome}/.gnupg" "${userHome}/.local" 2>/dev/null || true
+    chown -R ${userName}:staff "${userHome}/.config" "${userHome}/.cache" "${userHome}/.gnupg" "${userHome}/.local" 2>/dev/null || true
   '';
 }

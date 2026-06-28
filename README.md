@@ -49,9 +49,9 @@ Requires Determinate Nix — install from [determinate.systems](https://determin
 
 ## Architecture
 
-- **Inference** — `llama-server` on the host with configurable presets and auto VRAM management
-- **Agent isolation** — Debian 13 VMs via Lima (`vmType: vz`) that sandbox agents; VMs stay running until stopped with `muthr down`
-- **MCP services** — Dedicated Lima VM for potentially dangerous MCPs, isolated from the host
+- **Inference** — `mlxcel-server` on the host with configurable presets and OpenAI-compatible API mode
+- **Agent isolation** — Debian 13 container-based sandboxes managed by `muthr sandbox *`
+- **MCP services** — Dedicated `muthr-services` container profile for isolated MCP and SearXNG routing
 - **System management** — `nix-darwin` flakes with SHA256-pinned hashes, Ghostty + Neovim + Starship
 
 ## Updating
