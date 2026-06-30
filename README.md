@@ -5,7 +5,7 @@
 
 # dotfiles-nix
 
-**Hardened macOS dotfiles via Nix for a zero-trust AI workstation.** Declarative config, reproducible builds, muthr integration.
+**Reference macOS dotfiles via Nix for a zero-trust AI workstation.** Declarative config, reproducible builds, muthr integration.
 
 [What's installed](#whats-installed) • [Quick start](#quick-start) • [Architecture](#architecture) • [Updating](#updating)
 
